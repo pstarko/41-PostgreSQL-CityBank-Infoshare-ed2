@@ -30,3 +30,26 @@ where
 group by
 	rollup(department_id)
 order by grouping(department_id ), department_id
+
+/*
+4. Stwórz poniższy raport średnich wynagrodzeń dla każdego departamentu oraz nazwy etatu.
+Właściwie opisz podsumowanie i posortuj dane jak na poniższym raporcie (20 wierszy)
+*/
+
+select
+    coalesce(d.department_id::varchar, 'TOGETHER') deparment_id,
+    case  
+	    when grouping(d.department_id)=1 then '-------'
+		else coalesce(job_title, CONCAT('Summary ', d.department_id)) 
+	end jobs,
+    round(avg(e.salary),2) avger
+    from employees e join departments d on e.department_id = d. department_id
+                     join jobs j on e.job_id = j.job_id
+group by rollup (d.department_id, j.job_title) 
+having 
+	grouping(d.department_id) + grouping(j.job_title) = 0
+	or
+	grouping(d.department_id) + grouping(j.job_title) = 2
+order by 
+	grouping(d.department_id) + grouping(j.job_title),
+	d.department_id
