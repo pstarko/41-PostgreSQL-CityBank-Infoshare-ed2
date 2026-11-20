@@ -74,4 +74,43 @@ where
 	left(l.state_province, 1) = 'T'
 	--substring(l.state_province , 1, 1) = 'T'
 	--l.state_province like 'T%'
-	--((state_province)::text ~~ 'T%'::text)		 
+	--((state_province)::text ~~ 'T%'::text)
+
+
+/*
+6. Pokaż poniższe informacje o pracownikach, którzy są zatrudnieni na stanowisku
+Accountant oraz Purchasing Clerk, których roczny dochód przekracza 37200. Roczny
+dochód jest dwunastokrotnością wynagrodzenia podstawowego wraz z prowizją (5
+wierszy)
+*/
+
+select
+	e.last_name,
+	j.job_title 
+	from employees e join jobs j on e.job_id = j.job_id  
+where
+	j.job_title in ('Accountant', 'Purchasing Clerk')
+	and (salary + (salary * coalesce(e.commission_pct ,0))) * 12 > 37200
+	
+/*
+	7. Pokaż nazwy departamentów wraz z nazwiskami ich szefów i miejscem pracy
+(11 wierszy)	
+*/
+	
+select
+	e.first_name ,
+	e.last_name ,
+	d.department_name ,
+	l.city 
+	from employees e join departments d on e.employee_id = d.manager_id 
+					 join locations l on d.location_id = l.location_id 
+	
+					 
+					 
+					 
+					 
+					 
+					 
+
+
+		 
