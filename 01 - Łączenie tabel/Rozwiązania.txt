@@ -57,4 +57,21 @@ select
 where
 	l.city in ('Stretford', 'Bombay', 'Sydney', 'London', 'Munich', 'Seattle')
 group by
-	l.city					 
+	l.city			
+
+
+/*
+5. Pokaż liczbę pracowników, którzy pracują w prowincji stanowej(State Province),
+zaczynającej się od litery T (1 wiersz) (1 wiersz)
+*/
+
+explain
+select
+	count(e.employee_id ) ilosc
+	from employees e join departments d on e.department_id = d.department_id 
+					 join locations l on d.location_id = l.location_id 				 
+where
+	left(l.state_province, 1) = 'T'
+	--substring(l.state_province , 1, 1) = 'T'
+	--l.state_province like 'T%'
+	--((state_province)::text ~~ 'T%'::text)		 
