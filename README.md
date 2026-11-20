@@ -19,7 +19,7 @@ Przed szkoleniem zainstaluj:
    - macOS: https://www.postgresql.org/download/macosx/
    - Linux: `sudo apt install postgresql` (Ubuntu/Debian)
 
-2. **Klient SQL** – wybierz jeden:
+2. **Klient SQL**:
    - [DBeaver](https://dbeaver.io/download/) ✅ 
 
 ---
@@ -36,4 +36,4 @@ Przed szkoleniem zainstaluj:
 
 
 ```bash
-git clone https://github.com/pstarko/31-PostgreSQL-CityBank-Infoshare-ed1.git
+git clone https://github.com/pstarko/41-PostgreSQL-CityBank-Infoshare-ed2.git
