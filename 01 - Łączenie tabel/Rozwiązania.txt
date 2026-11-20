@@ -107,7 +107,37 @@ select
 	
 					 
 					 
+/*
+8. Zmodyfikuj powyższe zapytanie w taki sposób, by zostały wyświetlone departamenty
+nie posiadające szefa. Wybierz właściwy typ połączenia tabel(27 wierszy)
+*/
+
+select
+	e.first_name ,
+	e.last_name ,
+	d.department_name ,
+	l.city 
+	from employees e right join departments d on e.employee_id = d.manager_id 
+					 join locations l on d.location_id = l.location_id 
+	
+/*
+11. Pokaż ile w poszczególnych krajach wydaje się pieniędzy na wypłaty(25 wierszy)
+*/
 					 
+select
+    c.country_name ,
+    coalesce(sum(salary + (salary * coalesce(commission_pct,0))),0) suma
+    from employees e join departments d on  e.department_id = d.department_id
+                     join locations l on l.location_id=d.location_id
+					 right join countries c on c.country_id = l.country_id 
+group by 
+	c.country_name
+order by suma desc				 
+					 
+					 
+					 
+					 
+					 					 
 					 
 					 
 					 
