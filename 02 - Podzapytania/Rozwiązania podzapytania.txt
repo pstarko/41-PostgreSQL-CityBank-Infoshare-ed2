@@ -86,3 +86,15 @@ from employees e join jobs j on e.job_id = j.job_id
 where
 	salary > (select avg(salary) from employees	
 				where job_id = e.job_id )
+
+
+/*
+7. Użyj skorelowanego podzapytania, aby wyświetlić informacje o pracowniku
+niezatrudnionym w żadnym dziale (użyj właściwej formy operatora EXISTS) (1 wiersz)
+*/
+
+select 	
+	*
+	from employees e 
+where
+	not exists (select 1 from employees where department_id = e.department_id )
