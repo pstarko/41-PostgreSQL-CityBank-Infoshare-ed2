@@ -65,3 +65,24 @@ where
 	job_id in (select job_id from employees e 
 				where department_id not in (select department_id from departments
 												where department_name = 'Marketing'))
+
+
+
+/*
+5. Wyświetl informacje o pracownikach zarabiających więcej niż średnia pensja dla ich
+etatu(job_id) (43 wiersze)
+
+
+*/
+
+explain
+select 
+	e.first_name, 
+	e.last_name, 
+	e.salary,
+	j.job_title ,
+	(select avg(salary) from employees where job_id = e.job_id) avg_salary
+from employees e join jobs j on e.job_id = j.job_id 
+where
+	salary > (select avg(salary) from employees	
+				where job_id = e.job_id )
