@@ -1,0 +1,32 @@
+/*
+1. Pokaż sumę plac dla każdego departamentu z podsumowaniem (12 wierszy)
+
+*/
+
+select 
+	department_id,
+	sum(salary)
+	from employees
+where
+	department_id is not null
+group by
+	rollup(department_id)
+
+
+/*
+2. Pokaż maksymalną płacę dla każdego departamentu. Zachowaj opis i sortowanie z widoku
+poniżej (12 wierszy)
+*/
+
+select 
+	case 
+		when grouping(department_id ) = 1 then 'Max company salary'
+		else department_id::varchar
+	end dept,
+	max(salary)
+	from employees
+where
+	department_id is not null
+group by
+	rollup(department_id)
+order by grouping(department_id ), department_id
