@@ -98,3 +98,23 @@ select
 	from employees e 
 where
 	not exists (select 1 from employees where department_id = e.department_id )
+
+
+/*
+8. Wyświetl nazwę działu, który płaci Twoim pracownikom najwięcej pieniędzy
+miesięcznie(1 wiersz)
+
+*/
+
+select 	
+	(select department_name from departments where department_id = e.department_id )
+	from employees e 
+group by department_id
+having sum(salary) = (	
+						select
+							max(t1.suma)
+							from (
+								select
+									sum(salary) suma
+									from employees
+								group by department_id ) t1 )
