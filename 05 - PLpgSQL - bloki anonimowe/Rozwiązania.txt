@@ -36,3 +36,68 @@ BEGIN
         end if;
     END LOOP;
 END $$;
+
+
+/*
+Napisz skrypt, który:
+• Dla każdego klienta zaktualizuje kolumnę Status w zależności od wartości Saldo:
+	o VIP jeśli Saldo > 10000
+	o Standard jeśli Saldo BETWEEN 1000 AND 10000
+	o Zagrożony jeśli Saldo < 1000
+	o Zmień dane w tabeli i wypisz je w konsoli
+	Użyj: CASE
+
+*/
+
+DROP TABLE IF EXISTS Klienci;
+
+CREATE TABLE Klienci (
+ Id INT PRIMARY KEY,
+ Imie VARCHAR(50),
+ Nazwisko VARCHAR(50),
+ Saldo DECIMAL(10, 2),
+ Status VARCHAR(20)
+);
+
+
+INSERT INTO Klienci (Id, Imie, Nazwisko, Saldo, Status)
+VALUES
+(1, 'Anna', 'Kowalska', 15000.00, NULL),
+(2, 'Jan', 'Nowak', 5000.00, NULL),
+(3, 'Ewa', 'Zielińska', 900.00, NULL),
+(4, 'Tomasz', 'Wiśniewski', 10500.00, NULL),
+(5, 'Katarzyna', 'Wójcik', 0.00, NULL);
+
+select * from Klienci;
+
+/*
+Napisz skrypt, który:
+• Dla każdego klienta zaktualizuje kolumnę Status w zależności od wartości Saldo:
+	o VIP jeśli Saldo > 10000
+	o Standard jeśli Saldo BETWEEN 1000 AND 10000
+	o Zagrożony jeśli Saldo < 1000
+	o Zmień dane w tabeli i wypisz je w konsoli
+	Użyj: CASE
+
+*/
+
+DO $$
+DECLARE
+    klient_rec RECORD;
+BEGIN
+    update Klienci 
+    set status = CASE
+    		when saldo > 10000 then 'VIP'
+    		when saldo between 1000 and 10000 then 'Standard'
+    		else 'Zagrożony'
+    		END;
+    		
+    	for 	klient_rec in select nazwisko, saldo, status from klienci
+    	loop
+    		raise notice 'Klient: %, Saldo: %, Status: %', 
+    						klient_rec.nazwisko, klient_rec.saldo, klient_rec.status;
+    	end loop;  	
+END $$;
+
+select * from klienci;
+
