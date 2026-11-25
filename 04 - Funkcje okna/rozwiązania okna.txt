@@ -24,3 +24,21 @@ select
 group by
 	date_part('year', hire_date),
 	j.job_title
+
+/*
+3. Posortuj dane pracowników po job_title. Pokaż first and last name oraz salary. W dodatkowej
+kolumnie pokaż ile w sumie wydajemy dla całego etatu. Kolejna kolumna to procent udziału
+poszczególnego pracownika w wydatkach na etat (107 wierszy)
+*/
+
+select
+	t1.*,
+	round(t1.salary / t1.suma_jobs * 100,2) || '%' prct
+	from (
+		select
+			j.job_title,
+			e.first_name ,
+			e.last_name ,
+			e.salary ,
+			sum(e.salary) over (partition by j.job_title) suma_jobs
+			from employees e join jobs j on e.job_id = j.job_id ) t1
