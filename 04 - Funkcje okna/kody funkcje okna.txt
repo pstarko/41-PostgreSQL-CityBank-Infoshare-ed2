@@ -1,0 +1,161 @@
+SELECT
+	last_name,
+	hire_date,
+	LAG(last_name,1,'----') OVER (ORDER BY hire_date) AS poprzednik
+FROM 
+	employees
+	
+	
+SELECT
+	last_name,
+	hire_date,
+	LAG(last_name) OVER (ORDER BY hire_date) AS poprzednik
+FROM 
+	employees
+
+SELECT
+	last_name,
+	hire_date,
+	LAG(last_name) OVER (ORDER BY hire_date, last_name ) AS poprzednik
+FROM 
+	employees
+	
+	
+SELECT
+	last_name,
+	hire_date,
+	LEAD(last_name, 2, '----') OVER (ORDER BY hire_date) AS nastepny
+FROM employees
+	
+	
+SELECT
+	last_name,
+	hire_date,
+	job_id,
+	LEAD(last_name, 1, '----') OVER (partition by job_id ORDER BY hire_date) AS nastepny
+FROM employees
+
+SELECT
+	department_id,
+	STRING_AGG(last_name,' ,') nazwiska
+from employees
+group by department_id
+
+SELECT
+	department_id,
+	STRING_AGG(last_name, ',' order by last_name) nazwiska
+from employees
+group by department_id
+
+
+
+create table t1 (id int, tekst varchar(100));
+
+insert into t1 values (1,'abc,opo,ddd'),(2,'xxx,ccc')
+
+select * from t1;
+
+SELECT
+	id,
+	regexp_split_to_table(tekst, ',') AS tekst
+FROM t1;
+
+
+SELECT
+	distinct department_id,
+	FIRST_VALUE(last_name) 	over (partition by department_id order by salary DESC) last_name
+from employees;
+
+SELECT
+	distinct department_id,
+	FIRST_VALUE(last_name) 	over (partition by department_id order by salary) last_name
+from employees;
+
+
+SELECT
+	department_id,
+	salary,
+	last_VALUE(last_name) 	over (partition by department_id order by salary DESC) last_name
+from employees;
+
+select
+	department_id,
+	last_name,
+	salary
+	from employees e 
+where
+	department_id in (10,20,30)
+order by 1
+
+
+SELECT
+	distinct department_id,
+	last_VALUE(last_name) 	over (partition by department_id order by salary desc
+									rows between unbounded preceding
+											and unbounded following) last_name
+from employees;
+
+SELECT
+	distinct department_id,
+	FIRST_VALUE(last_name) 	over (partition by department_id order by salary) last_name
+from employees;
+	
+
+select 
+	distinct department_id,
+	sum(salary) over (partition by department_id) suma
+from employees
+
+select 
+	department_id,
+	sum(salary) suma
+from employees
+group by department_id 
+
+
+select
+	hire_date,
+	salary,
+	sum(salary) over (order by hire_date	
+					  ROWS BETWEEN 1 PRECEDING 
+					  		   AND 1 FOLLOWING) grow
+from employees
+
+select
+	hire_date,
+	salary,
+	sum(salary) over (order by hire_date	
+					  ROWS BETWEEN 2 PRECEDING 
+					  		   AND current row) grow
+from employees
+
+	
+select
+	hire_date,
+	salary,
+	sum(salary) over (order by hire_date	
+					  ROWS BETWEEN 2 PRECEDING 
+					  		   AND 1 PRECEDING) grow
+from employees	
+
+
+select 
+	last_name,
+	salary,
+	sum(salary) over (order by last_name 
+						rows between unbounded preceding
+								and current row) suma
+from employees
+
+select 
+	last_name,
+	hire_Date,
+	salary,
+	sum(salary) over (order by hire_Date 
+						range between unbounded preceding
+							  and current row) suma_range,
+	sum(salary) over (order by hire_Date 
+						rows between unbounded preceding		
+						 and current row) suma_rows
+from employees
+	
