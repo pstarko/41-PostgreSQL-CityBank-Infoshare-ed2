@@ -42,3 +42,17 @@ select
 			e.salary ,
 			sum(e.salary) over (partition by j.job_title) suma_jobs
 			from employees e join jobs j on e.job_id = j.job_id ) t1
+
+
+/*
+4. Pokaż first_name, last_name, hire_date oraz nazwisko zatrudnionego wcześniej pracownika
+biorąc pod uwagę datę zatrudnienia (107 wierszy)
+*/
+
+
+select
+	e.first_name ,
+	e.last_name ,
+	e.hire_date ,
+	LAG(first_name || ' '|| last_name, 1, '-----') over (order by hire_date) pre
+	from employees e
