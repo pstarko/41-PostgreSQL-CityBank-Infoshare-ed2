@@ -56,3 +56,15 @@ select
 	e.hire_date ,
 	LAG(first_name || ' '|| last_name, 1, '-----') over (order by hire_date) pre
 	from employees e
+
+/*
+5. Pokaż raport pracowników zatrudnionych w poszczególnych departamentach (11 wierszy)
+*/
+
+
+select
+	d.department_name ,
+	STRING_AGG(e.last_name, ' ,' order by e.last_name ) lista	
+	from employees e join departments d on e.department_id = d.department_id
+group by
+	d.department_name 
