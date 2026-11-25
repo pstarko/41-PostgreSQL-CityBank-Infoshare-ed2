@@ -68,3 +68,25 @@ select
 	from employees e join departments d on e.department_id = d.department_id
 group by
 	d.department_name 
+
+
+/*
+6. Zaktualizuj powyższe zapytanie w taki sposób, by otrzymać tylko pierwsze dwa nazwiska (11
+wierszy)
+*/
+
+
+	
+select
+	t1.department_name ,
+	string_agg(t1.last_name , ', ')
+	from (
+		select
+			department_name,
+			last_name,
+			rank() over (partition by department_name order by last_name) rnk
+			from employees e join departments d on e.department_id = d.department_id) t1
+where
+	t1.rnk <=2
+group by
+	t1.department_name 
