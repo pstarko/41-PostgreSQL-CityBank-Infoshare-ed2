@@ -5,6 +5,16 @@ select regexp_like('12345678901xx', '^[[:digit:]]{11}$')
 select regexp_like('AG234D', '^[[:alpha:]]{2}[[:digit:]]{3}[[:alpha:]]{1}$')
 
 
+/*
+ *  c. Kod w formacie 2 cyfry i znak % na końcunp., - 54%
+	d. Adres e-mail w formacie (imię.nazwa@domena.com)
+ */
+
+
+-- Kod w formacie 2 cyfry i znak % na końcu np., - 54%
+SELECT REGEXP_LIKE('23%', '^[0-9]{2}%$');
 
 
 
+-- Adres e-mail w formacie (imię.nazwa@domena.com)
+SELECT REGEXP_LIKE('jan.kowalski@domena.com', '^[a-z]+\.[a-z]+@[a-z]{2,}\.com$');
