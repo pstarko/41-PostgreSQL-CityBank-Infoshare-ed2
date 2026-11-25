@@ -1,0 +1,38 @@
+--
+
+select
+	last_name 
+from employees
+where
+	last_name ilike 'k%'
+	
+	
+select
+	last_name 
+from employees
+where
+	last_name ~~'K%'
+	
+select
+	last_name 
+from employees
+where
+	last_name !~~'K%'
+
+SELECT 
+	last_name,
+	substring(last_name similar '%o{2}' escape '#') match
+FROM employees
+
+
+SELECT regexp_count('ala ma kota, a kot ma ale', 'ma');
+
+
+SELECT regexp_count('a1b2c3d4', '[[:digit:]]');
+
+
+SELECT regexp_substr('ala ma kota', 'ma');
+
+
+SELECT regexp_substr('a1b25c3d4', '[[:digit:]]', 1, 3);
+

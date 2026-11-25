@@ -1,0 +1,10 @@
+--nr pesel (11 cyfr)
+select regexp_like('12345678901xx', '^[[:digit:]]{11}$')
+
+--b. Kod w formacie (2litery, 3 liczby, 1 litera) - tylko wielkie litery np., AG234D
+select regexp_like('AG234D', '^[[:alpha:]]{2}[[:digit:]]{3}[[:alpha:]]{1}$')
+
+
+
+
+
