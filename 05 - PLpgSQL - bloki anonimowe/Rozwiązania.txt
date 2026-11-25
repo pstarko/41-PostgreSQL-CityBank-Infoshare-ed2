@@ -121,3 +121,36 @@ BEGIN
 	raise notice 'Suma: %', suma;
 END $$;
 
+/*
+6. Napisz program, który zwróci Ci liczbę liter i cyfr w podanych ciągu znaków i cyfr. Znajdź
+wcześniej odpowiednią funkcję, która Ci to umożliwi. Do sprawdzenia czy znak jest liczbą czy
+literą wykorzystaj strukturę: IF znak ~ ’[0-9]’ THEN …
+*/
+
+
+DO $$
+DECLARE
+    tekst TEXT := 'Agent007xx1'; -- Podaj tutaj swój ciąg znaków
+    liczba_liter INT := 0;
+    liczba_cyfr INT := 0;
+    znak CHAR;
+BEGIN
+    -- Iteracja przez każdy znak w ciągu
+    FOR i IN 1..LENGTH(tekst) LOOP
+        znak := SUBSTRING(tekst,i,1); 
+	raise notice '%', SUBSTRING(tekst,i,1);
+	 -- Sprawdzenie czy znak jest cyfrą
+       IF znak ~ '[0-9]' THEN
+            liczba_cyfr := liczba_cyfr + 1;
+       else
+       		liczba_liter := liczba_liter + 1;
+       END IF;
+    END LOOP;
+
+    -- Wyświetlenie wyników
+    RAISE NOTICE 'Ciąg znaków: %', tekst;
+    RAISE NOTICE 'Liczba liter: %', liczba_liter;
+    RAISE NOTICE 'Liczba cyfr: %', liczba_cyfr;
+END $$;
+
+
