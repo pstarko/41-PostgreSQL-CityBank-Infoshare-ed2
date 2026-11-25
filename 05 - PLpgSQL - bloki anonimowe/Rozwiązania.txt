@@ -1,0 +1,19 @@
+/*
+1. Użytkownik podaje dwie liczby X i Y. Następnie pokazujesz mu liczby całkowite od X do Y.
+
+*/
+
+do $$
+declare
+	x int:=0;
+	y int:=10;
+begin
+	LOOP		
+		if x > y then
+			exit;
+		end if;
+		RAISE NOTICE ' % ', x;
+		x := x + 1;
+	end loop;
+end
+$$;
