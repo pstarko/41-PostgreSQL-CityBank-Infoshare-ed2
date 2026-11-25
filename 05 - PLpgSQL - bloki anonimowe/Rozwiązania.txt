@@ -101,3 +101,23 @@ END $$;
 
 select * from klienci;
 
+
+
+/*
+5. Napisz program do obliczania kolejnych liczb całkowitych. Np. po podaniu liczby 5 otrzymasz
+15(czyli 1+2+3+4+5)
+
+*/
+
+
+DO $$
+DECLARE
+	do_ilu int:=7;
+	suma int:=0;
+BEGIN
+	for i in 1..do_ilu loop
+		suma:= suma + i;
+	end loop;
+	raise notice 'Suma: %', suma;
+END $$;
+
